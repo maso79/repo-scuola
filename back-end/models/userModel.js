@@ -13,5 +13,5 @@ const schemaUser = new mongoose.Schema({
   },
 });
 
-const User=mongoose.model("User",schemaUser,"school-db")
+const User=mongoose.model("User",schemaUser,"utenti")
 module.exports = User
