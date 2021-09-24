@@ -2,12 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/userModel");
 const bodyParser = require("body-parser");
-const cors = require("cors");
+// const cors = require("cors");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT;
 
-app.use(cors());
+// app.use(cors());
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -19,10 +19,12 @@ app.get("/", (req, res) => {
 app.post("/registernewuser", async (req, res) => {
   const { nome, cognome } = req.body;
 
-  const user = new User({ nome, cognome });
+  // const newUser = new User({ nome, cognome });
+  // console.log(newUser)
 
   try {
-    const result = await user.save();
+    const result = await new User({nome, cognome});
+    result.save()
     console.log("success: ", result);
   } catch (err) {
     console.log(err);
