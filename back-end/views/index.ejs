@@ -14,6 +14,9 @@
         <input type="text" id="cognome">
         <input type="submit" value="Submit!">
     </form>
+    <input type="button" onclick="prendiTutti()">
+        Recupera tutti gli utenti
+    </input>
 </body>
     <script>
         const formField = document.querySelector('form')
@@ -41,6 +44,18 @@
                     
                 }).then(res => res.json())
             }
+        }
+
+        const prendiTutti=()=>{
+            console.log("pronto a recuperare tutti gli utenti")
+            fetch("/getallusers",{
+                method: "GET",
+            })
+            .then(result=>result.json())
+            .then(result=>{
+                console.log(result)
+            })
+            .catch(err=>console.log(err))
         }
     </script>
 </html>
