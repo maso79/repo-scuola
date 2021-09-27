@@ -49,12 +49,11 @@ app.get("/getallusers", async (req, res) => {
 });
 
 app.post("/getoneuser", (req, res) => {
-  console.log(req.body)
   const { nome, cognome } = req.body;
 
   User.findOne({ nome, cognome },(err,data)=>{
     if (data) res.json(data)
-    if (err) res.json({stato: "non trovato"})
+    if (data==null) res.json({stato: "non trovato"})
   })
 
 });

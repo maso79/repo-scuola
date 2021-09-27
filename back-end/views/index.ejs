@@ -17,6 +17,7 @@
     }
 </style>
 <body>
+    <h1></h1>
     <form>
         <label>Nome: </label>
         <input type="text" id="nome">
@@ -36,6 +37,7 @@
         </table>
     </div>
     <div>
+        <h3>Trova un utente inserendo nome e cognome</h3>
         <input type="text" name="" id="nomeCerca">
         <input type="text" name="" id="cognomeCerca">
         <button onclick="prendiUnUtente()">Cerca</button>
@@ -102,10 +104,16 @@
             })
             .then(result=>result.json())
             .then(result=>{
-                document.getElementById("nomeTrovato").innerText=result.nome
-                document.getElementById("cognomeTrovato").innerText=result.cognome
-                document.getElementById("creazioneTrovato").innerText=result.createdAt
-                document.getElementById("modificaTrovato").innerText=result.updatedAt
+                if (result.stato=="non trovato"){
+                    document.getElementById("nomeTrovato").innerText="Impossibile trovare questo utente"
+                }
+                else {
+                    document.getElementById("nomeTrovato").innerText=result.nome
+                    document.getElementById("cognomeTrovato").innerText=result.cognome
+                    document.getElementById("creazioneTrovato").innerText=result.createdAt
+                    document.getElementById("modificaTrovato").innerText=result.updatedAt                    
+                }
+
             })
             .catch(err=>console.log(err))
         }
