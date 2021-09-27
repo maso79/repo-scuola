@@ -14,9 +14,17 @@
         <input type="text" id="cognome">
         <input type="submit" value="Submit!">
     </form>
-    <input type="button" onclick="prendiTutti()">
+    <button type="button" onclick="prendiTutti()">
         Recupera tutti gli utenti
-    </input>
+    </button>
+    <div id="tabella">
+        <table class="tabellaTuttiUtenti">
+            <tr>
+                <thead>Nome</thead>
+                <thead>Cognome</thead>
+            </tr>
+        </table>
+    </div>
 </body>
     <script>
         const formField = document.querySelector('form')
