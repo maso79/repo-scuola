@@ -25,6 +25,11 @@
             </tr>
         </table>
     </div>
+    <div>
+        <input type="text" name="" id="nomeCerca">
+        <input type="text" name="" id="cognomeCerca">
+        <button onclick="prendiUnUtente()">Cerca</button>
+    </div>
 </body>
     <script>
         const formField = document.querySelector('form')
@@ -72,8 +77,16 @@
 
         const prendiUnUtente=()=>{
             fetch("/getoneuser",{
-                method: "GET",
+                method: "POST",
+                headers:{
+                    "Content-Type": "Application/JSON"
+                },
+                body: JSON.stringify({
+                    nome: document.getElementById("nomeCerca").value,
+                    cognome: document.getElementById("cognomeCerca").value
+                })
             })
+            .then(result=>result.json())
             .then(result=>{
                 console.log(result)
             })

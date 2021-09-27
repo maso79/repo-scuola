@@ -48,8 +48,13 @@ app.get("/getallusers", async (req, res) => {
   res.json(allUsers);
 });
 
-app.post("getoneuser", async (req, res) => {
+app.post("/getoneuser", (req, res) => {
+  console.log(req.body)
   const { nome, cognome } = req.body;
 
-  const user = await User.findOne({ nome, cognome }).then(res.json(user));
+  User.findOne({ nome, cognome },(err,data)=>{
+    if (data) res.json(data)
+    if (err) res.json({stato: "non trovato"})
+  })
+
 });
