@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+
+    .oggettoUtente{
+        background-color: burlywood;
+    }
+</style>
 <body>
     <form>
         <label>Nome: </label>
@@ -29,6 +39,12 @@
         <input type="text" name="" id="nomeCerca">
         <input type="text" name="" id="cognomeCerca">
         <button onclick="prendiUnUtente()">Cerca</button>
+        <div class="oggettoUtente">
+            <p><span id="nomeTrovato"></span></p>
+            <p><span id="cognomeTrovato"></span></p>
+            <p><span id="creazioneTrovato"></span></p>
+            <p><span id="modificaTrovato"></span></p>
+        </div>
     </div>
 </body>
     <script>
@@ -62,13 +78,11 @@
         }
 
         const prendiTutti=()=>{
-            console.log("pronto a recuperare tutti gli utenti")
             fetch("/getallusers",{
                 method: "GET",
             })
             .then(result=>result.json())
             .then(result=>{
-                console.log(result)
                 tuttiUtenti=result
                 riempiTabella()
             })
@@ -88,7 +102,10 @@
             })
             .then(result=>result.json())
             .then(result=>{
-                console.log(result)
+                document.getElementById("nomeTrovato").innerText=result.nome
+                document.getElementById("cognomeTrovato").innerText=result.cognome
+                document.getElementById("creazioneTrovato").innerText=result.createdAt
+                document.getElementById("modificaTrovato").innerText=result.updatedAt
             })
             .catch(err=>console.log(err))
         }
@@ -101,6 +118,12 @@
                 tabella.deleteRow(-1)
             }
 
+            let riga=tabella.insertRow(-1)
+            let nome=riga.insertCell(0)
+            let cognome=riga.insertCell(1)
+
+            nome.innerHTML="<b>Nome</b>"
+            cognome.innerHTML="<b>Cognome</b>"
             for (let i=0;i<tuttiUtenti.length;i++){
                 let riga=tabella.insertRow(-1)
                 let nome=riga.insertCell(0)
