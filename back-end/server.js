@@ -51,9 +51,17 @@ app.get("/getallusers", async (req, res) => {
 app.post("/getoneuser", (req, res) => {
   const { nome, cognome } = req.body;
 
-  User.findOne({ nome, cognome },(err,data)=>{
-    if (data) res.json(data)
-    if (data==null) res.json({stato: "non trovato"})
-  })
+  User.findOne({ nome, cognome }, (err, data) => {
+    if (data) res.json(data);
+    if (data == null) res.json({ stato: "non trovato" });
+  });
+});
 
+app.post("/removeoneuser", async (req, res) => {
+  const { nome, cognome } = req.body;
+
+  const user = await User.findOneAndRemove({ nome, cognome }, (err, data) => {
+    if (data) console.log("Removed user: ", data);
+    if (data == null) res.json({ stato: "non trovato" });
+  });
 });
