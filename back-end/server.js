@@ -48,7 +48,7 @@ app.get("/getallusers", async (req, res) => {
   res.json(allUsers);
 });
 
-app.get("getoneuser", async (req, res) => {
+app.post("getoneuser", async (req, res) => {
   const { nome, cognome } = req.body;
 
   const user = await User.findOne({ nome, cognome }).then(res.json(user));
