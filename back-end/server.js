@@ -38,7 +38,6 @@ app.post("/registernewuser", (req, res) => {
     .save()
     .then((result) => {
       console.log("success: ", result);
-      mongoose.connection.close();
     })
     .catch((err) => console.log(err));
 });
