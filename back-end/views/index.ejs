@@ -18,10 +18,10 @@
         Recupera tutti gli utenti
     </button>
     <div id="tabella">
-        <table class="tabellaTuttiUtenti">
+        <table id="tabellaTuttiUtenti">
             <tr>
-                <thead>Nome</thead>
-                <thead>Cognome</thead>
+                <th>Nome</th>
+                <th>Cognome</th>
             </tr>
         </table>
     </div>
@@ -30,6 +30,7 @@
         const formField = document.querySelector('form')
         const nomeField = document.getElementById('nome')
         const cognomeField = document.getElementById('cognome')
+        var tuttiUtenti=[]
 
         formField.addEventListener('submit', register)
 
@@ -51,6 +52,7 @@
                     body: JSON.stringify(data),
                     
                 }).then(res => res.json())
+                .catch(err=>console.log(err))
             }
         }
 
@@ -62,8 +64,38 @@
             .then(result=>result.json())
             .then(result=>{
                 console.log(result)
+                tuttiUtenti=result
+                riempiTabella()
             })
             .catch(err=>console.log(err))
+        }
+
+        const prendiUnUtente=()=>{
+            fetch("/getoneuser",{
+                method: "GET",
+            })
+            .then(result=>{
+                console.log(result)
+            })
+            .catch(err=>console.log(err))
+        }
+
+        const riempiTabella=()=>{
+            let tabella=document.getElementById("tabellaTuttiUtenti")
+            let dimensione=tabella.rows.length
+
+            for (let i=0;i<dimensione;i++){
+                tabella.deleteRow(-1)
+            }
+
+            for (let i=0;i<tuttiUtenti.length;i++){
+                let riga=tabella.insertRow(-1)
+                let nome=riga.insertCell(0)
+                let cognome=riga.insertCell(1)
+
+                nome.innerText=tuttiUtenti[i].nome
+                cognome.innerText=tuttiUtenti[i].cognome
+            }
         }
     </script>
 </html>
