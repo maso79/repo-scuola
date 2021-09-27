@@ -57,11 +57,14 @@ app.post("/getoneuser", (req, res) => {
   });
 });
 
-app.post("/removeoneuser", async (req, res) => {
+app.post("/removeoneuser", (req, res) => {
   const { nome, cognome } = req.body;
 
-  const user = await User.findOneAndRemove({ nome, cognome }, (err, data) => {
-    if (data) console.log("Removed user: ", data);
+  User.findOneAndRemove({ nome, cognome }, (err, data) => {
+    if (data) {
+      console.log("Removed user: ", data);
+      res.json({stato: "utente eliminato"})
+    }
     if (data == null) res.json({ stato: "non trovato" });
   });
 });
