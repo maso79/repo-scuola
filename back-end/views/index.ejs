@@ -109,6 +109,10 @@
         }
 
         const prendiUnUtente=()=>{
+            document.getElementById("nomeTrovato").innerText=""
+            document.getElementById("cognomeTrovato").innerText=""
+            document.getElementById("creazioneTrovato").innerText=""
+            document.getElementById("modificaTrovato").innerText=""   
             fetch("/getoneuser",{
                 method: "POST",
                 headers:{
