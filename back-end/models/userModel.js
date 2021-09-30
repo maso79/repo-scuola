@@ -5,12 +5,32 @@ const schemaUser = new mongoose.Schema(
     nome: {
       type: String,
       required: true,
-      unique: false
+      unique: false,
     },
     cognome: {
       type: String,
       required: true,
-      unique: false
+      unique: false,
+    },
+    eta: {
+      type: Number,
+      required: true,
+      unique: false,
+    },
+    giorno: {
+      type: Number,
+      required: true,
+      unique: false,
+    },
+    mese: {
+      type: Number,
+      required: true,
+      unique: false,
+    },
+    anno: {
+      type: Number,
+      required: true,
+      unique: true,
     },
   },
   {

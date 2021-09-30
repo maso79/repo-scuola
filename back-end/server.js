@@ -33,9 +33,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/registernewuser", (req, res) => {
-  const { nome, cognome } = req.body;
+  const { nome, cognome, eta, giorno, mese, anno } = req.body;
 
-  const result = new User({ nome, cognome });
+  const result = new User({ nome, cognome, eta, giorno, mese, anno });
   result
     .save()
     .then((result) => {
@@ -67,7 +67,7 @@ app.post("/removeoneuser", (req, res) => {
   User.findOneAndRemove({ nome, cognome }, (err, data) => {
     if (data) {
       console.log("Removed user: ", data);
-      res.json({stato: "utente eliminato"})
+      res.json({ stato: "utente eliminato" });
     }
     if (data == null) res.json({ stato: "non trovato" });
   });
