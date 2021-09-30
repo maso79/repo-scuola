@@ -8,6 +8,8 @@ const app = express();
 const port = process.env.PORT;
 const morgan = require("morgan");
 
+app.use(express.static("public"))
+
 // app.use(cors());
 app.set("view engine", "ejs");
 app.use(morgan("dev"));
@@ -55,6 +57,8 @@ app.post("/getoneuser", (req, res) => {
     if (data) res.json(data);
     if (data == null) res.json({ stato: "non trovato" });
   });
+
+  User.aggregate
 });
 
 app.post("/removeoneuser", (req, res) => {

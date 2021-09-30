@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 </head>
 <style>
     table, th, td {
@@ -19,53 +20,157 @@
     .centrato{
         text-align: center;
     }
+
+    .stessaRiga{
+        display: block;
+    }
 </style>
 <body>
     <h1 class="centrato">DATABASE NOSQL - MONGODB</h1>
     <hr>
-    <h3>Creazione utente</h3>
-    <form>
-        <label>Nome: </label>
-        <input type="text" id="nome">
-        <label>Cognome: </label>
-        <input type="text" id="cognome">
-        <input type="submit" value="Submit!">
-    </form>
-    <hr>
-    <h3>Visualizza tutti gli utenti in tabella</h3>
-    <button type="button" onclick="prendiTutti()">
-        Recupera tutti gli utenti
-    </button>
-    <div id="tabella">
-        <table id="tabellaTuttiUtenti">
-            <tr>
-                <th>Nome</th>
-                <th>Cognome</th>
-            </tr>
-        </table>
-    </div>
-    <hr>
     <div>
-        <h3>Trova un utente inserendo nome e cognome</h3>
-        <input type="text" name="" id="nomeCerca">
-        <input type="text" name="" id="cognomeCerca">
-        <button onclick="prendiUnUtente()">Cerca</button>
-        <div class="oggettoUtente">
-            <p><span id="nomeTrovato"></span></p>
-            <p><span id="cognomeTrovato"></span></p>
-            <p><span id="creazioneTrovato"></span></p>
-            <p><span id="modificaTrovato"></span></p>
+        <div class="container">
+            <h3>Creazione utente</h3>
+            <form>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Nome</label>
+                  <input type="text" class="form-control" id="nome" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Cognome</label>
+                  <input type="text" class="form-control" id="cognome">
+                </div>
+                <h5>Data di nascita</h5>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Giorno</label>
+                        <select name="" id="selectGiorno" class="form-control">
+                            <option value="">Giorno</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Mese</label>
+                        <select name="" id="" class="form-control">
+                            <option value="1">Gennaio</option>
+                            <option value="2">Febbraio</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Aprile</option>
+                            <option value="5">Maggio</option>
+                            <option value="6">Giugno</option>
+                            <option value="7">Luglio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Settembre</option>
+                            <option value="10">Ottobre</option>
+                            <option value="11">Novembre</option>
+                            <option value="12">Dicembre</option>
+                        </select>      
+                    </div>
+                    <div class="col-md-3">
+                        <label for="">Anno</label>
+                        <input type="text" name="" id="" class="form-control">
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+              <hr>
+              <h3>Visualizza tutti gli utenti in tabella</h3>
+              <button type="" onclick="prendiTutti()" class="btn btn-primary">
+                  Recupera tutti gli utenti
+              </button>
+              <br>
+              <br>
+              <div class="row">
+                <div id="tabella" class="col-xs-12">
+                    <table id="tabellaTuttiUtenti" class="table">
+                        <tr>
+                            <th>Nome</th>
+                            <th>Cognome</th>
+                        </tr>
+                    </table>
+                </div>                  
+              </div>
+              <hr>
+            <div>
+                <h3>Trova un utente inserendo nome e cognome</h3>
+                <div class="row">
+                    <div class="col-md-5">
+                        <input type="text" name="" id="nomeCerca" class="form-control">
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" name="" id="cognomeCerca" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <button onclick="prendiUnUtente()" class="btn btn-primary">Cerca</button>
+                    </div>
+                </div>
+                <br>
+                
+                
+                <div class="oggettoUtente">
+                    <p><span id="nomeTrovato"></span></p>
+                    <p><span id="cognomeTrovato"></span></p>
+                    <p><span id="creazioneTrovato"></span></p>
+                    <p><span id="modificaTrovato"></span></p>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <h3>Cancella un utente inserendo nome e cognome</h3>
+                <div class="row">
+                    <div class="col-md-5">
+                        <input type="text" name="" id="nomeCancella" class="form-control">
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" name="" id="cognomeCancella" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <button onclick="cancellaUtente()" class="btn btn-primary">Cancella</button>
+                    </div>
+                </div>
+                <p><span id="risultatoCancella"></span></p>
+            </div>
         </div>
-    </div>
-    <hr>
-    <div>
-        <h3>Cancella un utente inserendo nome e cognome</h3>
-        <input type="text" name="" id="nomeCancella">
-        <input type="text" name="" id="cognomeCancella">
-        <button onclick="cancellaUtente()">Cancella</button>
-        <p><span id="risultatoCancella"></span></p>
+        
+
     </div>
 </body>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
     <script>
         const formField = document.querySelector('form')
         const nomeField = document.getElementById('nome')
