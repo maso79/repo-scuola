@@ -47,8 +47,19 @@ app.post("/registernewuser", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-app.get("/getallusers", async (req, res) => {
-  const allUsers = await User.find();
+app.post("/getallusers", async (req, res) => {
+  const ordinamento=req.body.ordinamento
+  const ordine=req.body.ordine
+  console.log(ordine)
+  let allUsers
+
+  if (ordinamento==0) allUsers = await User.find().sort({ cognome: ordine, nome: ordine});
+  if (ordinamento==1) allUsers = await User.find().sort({ nome: ordine});
+  if (ordinamento==2) allUsers = await User.find().sort({ cognome: ordine});
+  if (ordinamento==3) allUsers = await User.find().sort({ eta: ordine, cognome: 1, nome: 1});
+  if (ordinamento==4) allUsers = await User.find().sort({ giorno: ordine, cognome: 1, nome: 1});
+  if (ordinamento==5) allUsers = await User.find().sort({ mese: ordine, cognome: 1, nome: 1});
+  if (ordinamento==6) allUsers = await User.find().sort({ anno: ordine, cognome: 1, nome: 1});
 
   res.json(allUsers);
 });

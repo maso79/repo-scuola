@@ -118,6 +118,27 @@
               </form>
               <hr>
               <h3>Visualizza tutti gli utenti in tabella</h3>
+              <select name="" id="selectOrdinamento" class="form-control">
+                  <option value="0">Nome e cognome (default)</option>
+                  <option value="1">Nome</option>
+                  <option value="2">Cognome</option>
+                  <option value="3">Età</option>
+                  <option value="4">Giorno</option>
+                  <option value="5">Mese</option>
+                  <option value="6">Anno</option>
+              </select>
+              <div>
+                  <h5>Ordina per:</h5>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioCrescente" value="option1">
+                    <label class="form-check-label" for="inlineRadio1">Crescente</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioDecrescente" value="option2">
+                    <label class="form-check-label" for="inlineRadio2">Decrescente</label>
+                  </div>
+              </div>
+              <br>
               <button type="" onclick="prendiTutti()" class="btn btn-primary">
                   Recupera tutti gli utenti
               </button>
@@ -129,6 +150,11 @@
                         <tr>
                             <th>Nome</th>
                             <th>Cognome</th>
+                            <th>Età</th>
+                            <th>Giorno</th>
+                            <th>Mese</th>
+                            <th>Anno</th>
+                            <th>Sesso</th>
                         </tr>
                     </table>
                 </div>                  
@@ -150,11 +176,9 @@
                 <br>
                 
                 
-                <div class="oggettoUtente">
-                    <p><span id="nomeTrovato"></span></p>
-                    <p><span id="cognomeTrovato"></span></p>
-                    <p><span id="creazioneTrovato"></span></p>
-                    <p><span id="modificaTrovato"></span></p>
+                <div class="card">
+                    <h5 class="card-title"><span id="nomeTrovato"> </span> <span id="cognomeTrovato"></span></h5>
+                    <p><span id="datiUtenteTrovato"></span></p>
                 </div>
             </div>
             <hr>
@@ -220,8 +244,22 @@
         }
 
         const prendiTutti=()=>{
+            let ordinamento=document.getElementById("selectOrdinamento").value
+            let ordine
+
+            if (document.getElementById("radioCrescente").checked==true) ordine=1
+            else ordine=-1
+
+
             fetch("/getallusers",{
-                method: "GET",
+                method: "POST",
+                headers:{
+                    "Content-Type": "Application/JSON"
+                },
+                body: JSON.stringify({
+                    ordinamento,
+                    ordine
+                })
             })
             .then(result=>result.json())
             .then(result=>{
@@ -233,9 +271,7 @@
 
         const prendiUnUtente=()=>{
             document.getElementById("nomeTrovato").innerText=""
-            document.getElementById("cognomeTrovato").innerText=""
-            document.getElementById("creazioneTrovato").innerText=""
-            document.getElementById("modificaTrovato").innerText=""   
+            document.getElementById("cognomeTrovato").innerText=""  
             fetch("/getoneuser",{
                 method: "POST",
                 headers:{
@@ -252,10 +288,10 @@
                     document.getElementById("nomeTrovato").innerText="Impossibile trovare questo utente"
                 }
                 else {
+                    result.mese+=1
                     document.getElementById("nomeTrovato").innerText=result.nome
                     document.getElementById("cognomeTrovato").innerText=result.cognome
-                    document.getElementById("creazioneTrovato").innerText=result.createdAt
-                    document.getElementById("modificaTrovato").innerText=result.updatedAt                    
+                    document.getElementById("datiUtenteTrovato").innerHTML="Età: "+result.eta+"<br>Data di nascita: "+result.giorno+"/"+result.mese+"/"+result.anno+"<br>Sesso: "+result.sesso                 
                 }
 
             })
@@ -297,16 +333,36 @@
             let riga=tabella.insertRow(-1)
             let nome=riga.insertCell(0)
             let cognome=riga.insertCell(1)
+            let eta=riga.insertCell(2)
+            let giorno=riga.insertCell(3)
+            let mese=riga.insertCell(4)
+            let anno=riga.insertCell(5)
+            let sesso=riga.insertCell(6)
 
             nome.innerHTML="<b>Nome</b>"
             cognome.innerHTML="<b>Cognome</b>"
+            eta.innerHTML="<b>Età</b>"
+            giorno.innerHTML="<b>Giorno</b>"
+            mese.innerHTML="<b>Mese</b>"
+            anno.innerHTML="<b>Anno</b>"
+            sesso.innerHTML="<b>Sesso</b>"
             for (let i=0;i<tuttiUtenti.length;i++){
                 let riga=tabella.insertRow(-1)
                 let nome=riga.insertCell(0)
                 let cognome=riga.insertCell(1)
+                let eta=riga.insertCell(2)
+                let giorno=riga.insertCell(3)
+                let mese=riga.insertCell(4)
+                let anno=riga.insertCell(5)
+                let sesso=riga.insertCell(6)
 
                 nome.innerText=tuttiUtenti[i].nome
                 cognome.innerText=tuttiUtenti[i].cognome
+                eta.innerText=tuttiUtenti[i].eta
+                giorno.innerText=tuttiUtenti[i].giorno
+                mese.innerText=tuttiUtenti[i].mese
+                anno.innerText=tuttiUtenti[i].anno
+                sesso.innerText=tuttiUtenti[i].sesso
             }
         }
     </script>
