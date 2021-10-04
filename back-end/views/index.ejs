@@ -146,7 +146,7 @@
               <br>
               <div class="row">
                 <div id="tabella" class="col-xs-12">
-                    <table id="tabellaTuttiUtenti" class="table">
+                    <table id="tabellaTuttiUtenti" class="table table-striped table-hover">
                         <tr>
                             <th>Nome</th>
                             <th>Cognome</th>
@@ -264,6 +264,22 @@
             .then(result=>result.json())
             .then(result=>{
                 tuttiUtenti=result
+
+                for (i=0;i<tuttiUtenti.length;i++){
+                    if (tuttiUtenti[i].mese==0) tuttiUtenti[i].mese="Gennaio"
+                    if (tuttiUtenti[i].mese==1) tuttiUtenti[i].mese="Febbraio"
+                    if (tuttiUtenti[i].mese==2) tuttiUtenti[i].mese="Marzo"
+                    if (tuttiUtenti[i].mese==3) tuttiUtenti[i].mese="Aprile"
+                    if (tuttiUtenti[i].mese==4) tuttiUtenti[i].mese="Maggio"
+                    if (tuttiUtenti[i].mese==5) tuttiUtenti[i].mese="Giugno"
+                    if (tuttiUtenti[i].mese==6) tuttiUtenti[i].mese="Luglio"
+                    if (tuttiUtenti[i].mese==7) tuttiUtenti[i].mese="Agosto"
+                    if (tuttiUtenti[i].mese==8) tuttiUtenti[i].mese="Settembre"
+                    if (tuttiUtenti[i].mese==9) tuttiUtenti[i].mese="Ottobre"
+                    if (tuttiUtenti[i].mese==10) tuttiUtenti[i].mese="Novembre"
+                    if (tuttiUtenti[i].mese==11) tuttiUtenti[i].mese="Dicembre"
+                }
+
                 riempiTabella()
             })
             .catch(err=>console.log(err))
