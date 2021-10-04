@@ -30,8 +30,13 @@ const schemaUser = new mongoose.Schema(
     anno: {
       type: Number,
       required: true,
-      unique: true,
+      unique: false,
     },
+    sesso:{
+      type: String,
+      required: true,
+      unique: false
+    }
   },
   {
     timestamps: true,

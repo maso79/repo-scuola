@@ -81,25 +81,37 @@
                     </div>
                     <div class="col-md-3">
                         <label>Mese</label>
-                        <select name="" id="" class="form-control">
-                            <option value="1">Gennaio</option>
-                            <option value="2">Febbraio</option>
-                            <option value="3">Marzo</option>
-                            <option value="4">Aprile</option>
-                            <option value="5">Maggio</option>
-                            <option value="6">Giugno</option>
-                            <option value="7">Luglio</option>
-                            <option value="8">Agosto</option>
-                            <option value="9">Settembre</option>
-                            <option value="10">Ottobre</option>
-                            <option value="11">Novembre</option>
-                            <option value="12">Dicembre</option>
-                        </select>      
+                        <select name="" id="selectMese" class="form-control">
+                            <option value="0">Gennaio</option>
+                            <option value="1">Febbraio</option>
+                            <option value="2">Marzo</option>
+                            <option value="3">Aprile</option>
+                            <option value="4">Maggio</option>
+                            <option value="5">Giugno</option>
+                            <option value="6">Luglio</option>
+                            <option value="7">Agosto</option>
+                            <option value="8">Settembre</option>
+                            <option value="9">Ottobre</option>
+                            <option value="10">Novembre</option>
+                            <option value="11">Dicembre</option>
+                        </select> 
                     </div>
                     <div class="col-md-3">
                         <label for="">Anno</label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="inputAnno" class="form-control">
                     </div>
+                </div>
+                <br>
+                <div>
+                    <h5>Sesso</h5>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioMaschio" value="option1">
+                        <label class="form-check-label" for="inlineRadio1">Maschio</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioFemmina" value="option2">
+                        <label class="form-check-label" for="inlineRadio2">Femmina</label>
+                      </div>
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -182,12 +194,18 @@
         async function register (e) {
             e.preventDefault()
 
-            var nome = nomeField.value
-            var cognome = cognomeField.value
+            let nome = nomeField.value
+            let cognome = cognomeField.value
+            let giorno = document.getElementById("selectGiorno").value
+            let mese=document.getElementById("selectMese").value
+            let anno=document.getElementById("inputAnno").value
+            let sesso
+            if (document.getElementById("radioMaschio").checked==true) sesso="maschio"
+            else sesso="femmina"
 
             if (nome != '' && cognome != '') {
 
-                let data = { nome: nome, cognome: cognome }
+                let data = { nome: nome, cognome: cognome, giorno, mese, anno, sesso }
 
                 const result = await fetch('/registernewuser', {
                     method: 'POST',

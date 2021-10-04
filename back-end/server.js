@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT;
 const morgan = require("morgan");
+const eta=require("./eta")
 
 app.use(express.static("public"))
 
@@ -33,9 +34,11 @@ app.get("/", (req, res) => {
 });
 
 app.post("/registernewuser", (req, res) => {
-  const { nome, cognome, eta, giorno, mese, anno } = req.body;
+  const { nome, cognome, giorno, mese, anno, sesso } = req.body;
+  let etaUtente=eta.calcolaEta(Number(anno),Number(mese),Number(giorno))
+  console.log(typeof(etaUtente))
 
-  const result = new User({ nome, cognome, eta, giorno, mese, anno });
+  const result = new User({ nome, cognome, eta: etaUtente, giorno, mese, anno, sesso });
   result
     .save()
     .then((result) => {
