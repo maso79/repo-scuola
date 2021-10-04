@@ -49,7 +49,6 @@ app.post("/registernewuser", (req, res) => {
   if (mese==9) meseStringa="Ottobre"
   if (mese==10) meseStringa="Novembre"
   if (mese==11) meseStringa="Dicembre"
-  console.log(typeof(etaUtente))
 
   const result = new User({ nome, cognome, eta: etaUtente, giorno, mese, meseStringa, anno, sesso });
   result
@@ -67,7 +66,6 @@ app.post("/registernewuser", (req, res) => {
 app.post("/getallusers", async (req, res) => {
   const ordinamento=req.body.ordinamento
   const ordine=req.body.ordine
-  console.log(ordine)
   let allUsers
 
   if (ordinamento==0) allUsers = await User.find().sort({ cognome: ordine, nome: ordine});
@@ -112,5 +110,25 @@ app.get("/removeallusers",(req,res)=>{
       res.json({stato: "Tutti gli utenti eliminati"})
     }
     if (data == null) res.json({ stato: "errore" });
+  })
+})
+
+app.get("/statistiche",(req,res)=>{
+  User.aggregate([
+    {
+      '$group': {
+        '_id': '$meseStringa', 
+        'persone': {
+          '$sum': 1
+        }
+      }
+    }, {
+      '$sort': {
+        '_id': 1
+      }
+    }
+  ],(err,data)=>{
+    if (data) res.json(data)
+    if (data==null) res.status(400).json({stato: "errore"})
   })
 })

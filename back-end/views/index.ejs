@@ -145,21 +145,17 @@
               </button>
               <br>
               <br>
-              <div class="row">
-                <div id="tabella" class="col-xs-12">
-                    <table id="tabellaTuttiUtenti" class="table table-striped table-hover">
-                        <tr>
-                            <th>Nome</th>
-                            <th>Cognome</th>
-                            <th>Età</th>
-                            <th>Giorno</th>
-                            <th>Mese</th>
-                            <th>Anno</th>
-                            <th>Sesso</th>
-                        </tr>
-                    </table>
-                </div>                  
-              </div>
+            <table id="tabellaTuttiUtenti" class="table table-striped table-hover">
+                <tr>
+                    <th>Nome</th>
+                    <th>Cognome</th>
+                    <th>Età</th>
+                    <th>Giorno</th>
+                    <th>Mese</th>
+                    <th>Anno</th>
+                    <th>Sesso</th>
+                </tr>
+            </table>
               <hr>
             <div>
                 <h3>Trova un utente inserendo nome e cognome</h3>
@@ -201,9 +197,14 @@
             <br>
             <hr>
             <h3>Statistiche sugli utenti</h3>
-            <button class="btn btn-primary">Recupera le statistiche</button>
+            <button class="btn btn-primary" onclick="getStatistiche()">Recupera le statistiche</button>
+
+            <h5>Numero di persone nate per mese</h5>
             <table id="tabellaUtentiPerMese" class="table table-striped table-hover">
-                
+                <thead>
+                    <th>Mese</th>
+                    <th>Numero di persone</th>
+                </thead>
             </table>
             <hr>
             <br>
@@ -376,6 +377,38 @@
                     alert("Tutti gli utenti sono stati eliminati")               
                 }
 
+            })
+            .catch(err=>console.log(err))
+        }
+
+        const getStatistiche=()=>{
+            fetch("/statistiche",{
+                method: "GET"
+            })
+            .then(result=>result.json())
+            .then(result=>{
+                console.log(result)
+                let tabella=document.getElementById("tabellaUtentiPerMese")
+                let dimensioneTabella=tabella.rows.length
+
+                for (i=0;i<dimensioneTabella;i++){
+                    tabella.deleteRow(-1)
+                }
+
+                let riga=tabella.insertRow(-1)
+                let mese=riga.insertCell(0)
+                let numero=riga.insertCell(1)
+
+                mese.innerHTML="<b>Mese</b>"
+                numero.innerHTML="<b>Numero di persone</b>"
+                for (i=0;i<result.length;i++){
+                    riga=tabella.insertRow(-1)
+                    mese=riga.insertCell(0)
+                    numero=riga.insertCell(1)
+
+                    mese.innerText=result[i]._id
+                    numero.innerText=result[i].persone
+                }
             })
             .catch(err=>console.log(err))
         }
