@@ -118,17 +118,17 @@
               </form>
               <hr>
               <h3>Visualizza tutti gli utenti in tabella</h3>
+              <h5>Ordina per:</h5>
               <select name="" id="selectOrdinamento" class="form-control">
                   <option value="0">Nome e cognome (default)</option>
                   <option value="1">Nome</option>
                   <option value="2">Cognome</option>
                   <option value="3">Età</option>
-                  <option value="4">Giorno</option>
-                  <option value="5">Mese</option>
-                  <option value="6">Anno</option>
+                  <option value="4">Giorno di nascita</option>
+                  <option value="5">Mese di nascita</option>
+                  <option value="6">Anno di nascita</option>
               </select>
               <div>
-                  <h5>Ordina per:</h5>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioCrescente" value="option1">
                     <label class="form-check-label" for="inlineRadio1">Crescente</label>
@@ -136,7 +136,8 @@
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioDecrescente" value="option2">
                     <label class="form-check-label" for="inlineRadio2">Decrescente</label>
-                  </div>
+                  </div><br>
+                  <small>Default: crescente</small>
               </div>
               <br>
               <button type="" onclick="prendiTutti()" class="btn btn-primary">
@@ -197,6 +198,17 @@
                 </div>
                 <p><span id="risultatoCancella"></span></p>
             </div>
+            <br>
+            <hr>
+            <h3>Statistiche sugli utenti</h3>
+            <button class="btn btn-primary">Recupera le statistiche</button>
+            <table id="tabellaUtentiPerMese" class="table table-striped table-hover">
+                
+            </table>
+            <hr>
+            <br>
+            <button class="btn-primary btn btn-block" onclick="cancellaTutti()">Cancella tutti gli utenti</button>
+            <br>
         </div>
         
 
@@ -239,6 +251,18 @@
                     body: JSON.stringify(data),
                     
                 }).then(res => res.json())
+                .then(result=>{
+                    if (result.stato=="successo"){
+                        alert("Utente creato")
+                        document.getElementById("selectMese").value=""
+                        document.getElementById("inputAnno").value=""
+                        document.getElementById("selectGiorno").value=""
+                        document.getElementById("nome").value=""
+                        document.getElementById("cognome").value=""
+                        if (document.getElementById("radioMaschio").checked==true) document.getElementById("radioMaschio").checked==false
+                        else document.getElementById("radioFemmina").checked==false
+                    }
+                })
                 .catch(err=>console.log(err))
             }
         }
@@ -248,7 +272,8 @@
             let ordine
 
             if (document.getElementById("radioCrescente").checked==true) ordine=1
-            else ordine=-1
+            else if (document.getElementById("radioDecrescente").checked==true) ordine=-1
+            else ordine=1
 
 
             fetch("/getallusers",{
@@ -332,6 +357,23 @@
                 }
                 else {
                     alert("Utente eliminato")               
+                }
+
+            })
+            .catch(err=>console.log(err))
+        }
+
+        const cancellaTutti=()=>{
+            fetch("/removeallusers",{
+                method: "GET",
+            })
+            .then(result=>result.json())
+            .then(result=>{
+                if (result.stato=="errore"){
+                    alert("Impossibile cancellare tutti gli utenti")
+                }
+                else {
+                    alert("Tutti gli utenti sono stati eliminati")               
                 }
 
             })

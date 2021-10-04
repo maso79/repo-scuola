@@ -1,11 +1,11 @@
 const calcolaEta=(anno, mese, giorno)=>{
-    let data=anno+"-"+mese+"-"+giorno
-    console.log(data)
-    let oggettoData = new Date(data);
-    if(data==null || data=='') {
-      return false; 
-    } else {
-    
+  let data=anno+"-"+mese+"-"+giorno
+  console.log(data)
+  let oggettoData = new Date(data);
+  if(data==null || data=='') {
+    return false; 
+  } else {
+  
     //calculate month difference from current date in time
     var month_diff = Date.now() - oggettoData.getTime();
     
@@ -20,7 +20,7 @@ const calcolaEta=(anno, mese, giorno)=>{
     
     //display the calculated age
     return age
-    }
+  }
 }
 
 module.exports={

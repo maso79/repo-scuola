@@ -27,6 +27,11 @@ const schemaUser = new mongoose.Schema(
       required: true,
       unique: false,
     },
+    meseStringa:{
+      type: String,
+      required: true,
+      unique: false
+    },
     anno: {
       type: Number,
       required: true,
@@ -36,7 +41,8 @@ const schemaUser = new mongoose.Schema(
       type: String,
       required: true,
       unique: false
-    }
+    },
+    
   },
   {
     timestamps: true,

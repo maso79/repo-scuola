@@ -36,15 +36,32 @@ app.get("/", (req, res) => {
 app.post("/registernewuser", (req, res) => {
   const { nome, cognome, giorno, mese, anno, sesso } = req.body;
   let etaUtente=eta.calcolaEta(Number(anno),Number(mese),Number(giorno))
+  let meseStringa
+  if (mese==0) meseStringa="Gennaio"
+  if (mese==1) meseStringa="Febbaio"
+  if (mese==2) meseStringa="Marzo"
+  if (mese==3) meseStringa="Aprile"
+  if (mese==4) meseStringa="Maggio"
+  if (mese==5) meseStringa="Giugno"
+  if (mese==6) meseStringa="Luglio"
+  if (mese==7) meseStringa="Agosto"
+  if (mese==8) meseStringa="Settembre"
+  if (mese==9) meseStringa="Ottobre"
+  if (mese==10) meseStringa="Novembre"
+  if (mese==11) meseStringa="Dicembre"
   console.log(typeof(etaUtente))
 
-  const result = new User({ nome, cognome, eta: etaUtente, giorno, mese, anno, sesso });
+  const result = new User({ nome, cognome, eta: etaUtente, giorno, mese, meseStringa, anno, sesso });
   result
     .save()
     .then((result) => {
       console.log("success: ", result);
+      res.json({stato: "successo"})
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err)
+      res.json({stato: "errore"})
+    });
 });
 
 app.post("/getallusers", async (req, res) => {
@@ -86,3 +103,14 @@ app.post("/removeoneuser", (req, res) => {
     if (data == null) res.json({ stato: "non trovato" });
   });
 });
+
+app.get("/removeallusers",(req,res)=>{
+  User.deleteMany({$or: [{sesso: "maschio"}, {sesso: "femmina"}]},(err,data)=>{
+    console.log(data)
+    console.log("err: "+err)
+    if (data){
+      res.json({stato: "Tutti gli utenti eliminati"})
+    }
+    if (data == null) res.json({ stato: "errore" });
+  })
+})
