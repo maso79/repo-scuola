@@ -206,9 +206,17 @@
                     <th>Numero di persone</th>
                 </thead>
             </table>
+            <br>
+            <h5>Nome delle persone per età</h5>
+            <table id="tabellaPersoneEta" class="table table-striped table-hover">
+                <thead>
+                    <th>Età</th>
+                    <th>Persone</th>
+                </thead>
+            </table>
             <hr>
             <br>
-            <button class="btn-primary btn btn-block" onclick="cancellaTutti()">Cancella tutti gli utenti</button>
+            <button class="btn-primary btn btn-block" onclick="cancellaTutti()" disabled>Cancella tutti gli utenti</button>
             <br>
         </div>
         
@@ -387,7 +395,6 @@
             })
             .then(result=>result.json())
             .then(result=>{
-                console.log(result)
                 let tabella=document.getElementById("tabellaUtentiPerMese")
                 let dimensioneTabella=tabella.rows.length
 
@@ -411,6 +418,37 @@
                 }
             })
             .catch(err=>console.log(err))
+
+            fetch("/statistiche_nome",{
+                method: "GET"
+            })
+            .then(result=>result.json())
+            .then(result=>{
+                console.log(result)
+                let tabella=document.getElementById("tabellaPersoneEta")
+                let dimensioneTabella=tabella.rows.length
+
+                for (i=0;i<dimensioneTabella;i++){
+                    tabella.deleteRow(-1)
+                }
+
+                let riga=tabella.insertRow(-1)
+                let eta=riga.insertCell(0)
+                let persone=riga.insertCell(1)
+
+                eta.innerHTML="<b>Età</b>"
+                persone.innerHTML="<b>Persone</b>"
+                for (i=0;i<result.length;i++){
+                    riga=tabella.insertRow(-1)
+                    eta=riga.insertCell(0)
+                    persone=riga.insertCell(1)
+
+                    eta.innerText=result[i]._id
+                    for (j=0;j<result[i].persone.length;j++){
+                        persone.innerHTML=persone.innerHTML+result[i].persone[j]+"<br>"
+                    }
+                }
+            })
         }
 
         const riempiTabella=()=>{
