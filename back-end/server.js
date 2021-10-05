@@ -135,22 +135,30 @@ app.get("/statistiche",(req,res)=>{
 
 app.get("/statistiche_nome",(req,res)=>{
   User.aggregate([
-    {
-      '$group': {
-        '_id': '$eta', 
-        'persone': {
-          '$push': {
-            '$concat': [
-              '$nome', ' ', '$cognome'
-            ]
+    [
+      {
+        '$sort': {
+          'anno': 1, 
+          'mese': 1, 
+          'giorno': 1
+        }
+      }, {
+        '$group': {
+          '_id': '$eta', 
+          'persone': {
+            '$push': {
+              '$concat': [
+                '$nome', ' ', '$cognome'
+              ]
+            }
           }
         }
+      }, {
+        '$sort': {
+          '_id': 1
+        }
       }
-    }, {
-      '$sort': {
-        '_id': 1
-      }
-    }
+    ]
   ],(err,data)=>{
     if (data) res.json(data)
     if (data==null) res.status(400).json({stato: "errore"})
