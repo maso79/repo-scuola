@@ -336,6 +336,7 @@
             .then(result=>{
                 if (result.stato=="non trovato"){
                     document.getElementById("nomeTrovato").innerText="Impossibile trovare questo utente"
+                    document.getElementById("datiUtenteTrovato").innerHTML="Nessun dato disponibile"
                 }
                 else {
                     result.mese+=1
